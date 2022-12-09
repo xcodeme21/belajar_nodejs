@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
@@ -10,7 +11,7 @@ require("./app/routes/tutorial.routes")(app);
 require("./app/routes/user.routes")(app);
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8081",
 };
 
 app.use(cors(corsOptions));
@@ -37,8 +38,10 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to belajar nodejs application." });
 });
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+const { API_PORT } = process.env;
+const port = process.env.PORT || API_PORT;
+
+// server listening
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
